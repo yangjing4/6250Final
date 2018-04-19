@@ -58,5 +58,28 @@ public class CommentDAO extends DAO{
 			}
 			return null;
 		}
+	 
+	 public void delete(Comment comment)
+	            throws CommentException {
+	        try {
+	            begin();
+	            getSession().delete(comment);
+	            commit();
+	        } catch (HibernateException e) {
+	            rollback();
+	            throw new CommentException("Could not delete comment", e);
+	        }
+	    }
+	 
+	 public void update(Comment comment) throws CommentException {
+	        try {
+	            begin();
+	            getSession().update(comment);
+	            commit();
+	        } catch (HibernateException e) {
+	            rollback();
+	            throw new CommentException("Could not update the comment", e);
+	        }
+	    }
 
 }

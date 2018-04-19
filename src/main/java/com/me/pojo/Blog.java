@@ -44,8 +44,8 @@ public class Blog {
 	@Column(name="date")
 	private String date;
 	
-//	@OneToMany(mappedBy="blog")
-//	private Set<Comment> comments = new HashSet<Comment>();
+	@OneToMany(mappedBy="blog")
+	private Set<Comment> comments = new HashSet<Comment>();
 	
 	@ManyToOne
 	private User user;
@@ -125,13 +125,13 @@ public class Blog {
 		this.date = date;
 	}
 
-//	public Set<Comment> getComments() {
-//		return comments;
-//	}
-//
-//	public void setComments(Set<Comment> comments) {
-//		this.comments = comments;
-//	}
+	public Set<Comment> getComments() {
+		return comments;
+	}
+
+	public void setComments(Set<Comment> comments) {
+		this.comments = comments;
+	}
 
 	
 

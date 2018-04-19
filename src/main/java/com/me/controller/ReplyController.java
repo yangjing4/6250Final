@@ -74,5 +74,22 @@ public class ReplyController {
 		
 		
 	}
+	
+	@RequestMapping(value = "/reply/delete.htm", method = RequestMethod.GET)
+	public ModelAndView deleteComment(HttpServletRequest request) throws Exception {
+
+		try {	
+			long id =Long.valueOf(request.getParameter("id"));
+            Reply re= replyDao.get(id);
+            Comment comm= re.getComment();
+            comm.getReplys().remove(re);
+            commentDao.update(comm);
+            replyDao.delete(re);
+			return new ModelAndView("delete-success", "blog", re);		
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return new ModelAndView("error", "errorMessage", "error while login");
+		}	
+	}
 
 }

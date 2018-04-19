@@ -2,6 +2,7 @@ package com.me.controller;
 
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -20,14 +21,17 @@ import org.springframework.web.servlet.ModelAndView;
 import com.me.dao.BlogDAO;
 import com.me.dao.CategoryDAO;
 import com.me.dao.CommentDAO;
+import com.me.dao.ReplyDAO;
 import com.me.dao.UserDAO;
 import com.me.exception.BlogException;
 import com.me.exception.CommentException;
 import com.me.pojo.Blog;
 import com.me.pojo.Category;
 import com.me.pojo.Comment;
+import com.me.pojo.Reply;
 import com.me.pojo.User;
 import com.me.validator.UserValidator;
+
 
 
 @Controller
@@ -46,10 +50,11 @@ public class CommentController {
 	@Qualifier("commentDao")
 	CommentDAO commentDao;
 	
-	
+	@Autowired
+	@Qualifier("replyDao")
+	ReplyDAO replyDao;
 	
 
-	
 	
 	@RequestMapping(value = "/comment/add", method = RequestMethod.POST)
 	public ModelAndView addCategory(HttpServletRequest request,@ModelAttribute("comment")Comment comment, BindingResult result) throws Exception {
@@ -84,6 +89,29 @@ public class CommentController {
 		}
 		
 		
+	}
+	
+	@RequestMapping(value = "/comment/delete.htm", method = RequestMethod.GET)
+	public ModelAndView deleteComment(HttpServletRequest request) throws Exception {
+
+		try {	
+			long id =Long.valueOf(request.getParameter("id"));
+            Comment comm= commentDao.get(id);
+            Blog blog= comm.getBlog();
+            Set<Comment> comms= blog.getComments();
+            comms.remove(comm);
+            blogDao.update(blog);
+            Set<Reply> replys = comm.getReplys();
+            for(Reply re: replys) {
+            	replys.remove(re);
+            	replyDao.delete(re);
+            }
+            commentDao.delete(comm);
+			return new ModelAndView("delete-success", "blog", comm);		
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return new ModelAndView("error", "errorMessage", "error while login");
+		}	
 	}
 	
 

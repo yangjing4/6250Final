@@ -15,7 +15,7 @@
 	
 	<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
-<a href="${contextPath}/user/list.htm" >View All Users</a> <br />
-
+<a href="${contextPath}/user/list.htm" >View All Users</a> <br/>
+<a href="${contextPath}/blog/listAll.htm" >View All Users</a> <br/>
 </body>
 </html>

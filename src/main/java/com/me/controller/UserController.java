@@ -155,8 +155,6 @@ public class UserController {
 		if (captcha.validate(captchaCode)) {
 			if(!(result.hasErrors())) {
 			String useremail = user.getEmail().getEmailAddress();
-			String username=user.getUsername();
-			
 			if(!(useremail==null)) {
 			try {
 				user.setStatus(0);
@@ -165,7 +163,7 @@ public class UserController {
 				int randomNum1 = rand.nextInt(5000000);
 				int randomNum2 = rand.nextInt(5000000);
 				try {
-					String str = "http://localhost:8080/blog/user/validateemail.htm?username=" + username+ "&key1="
+					String str = "http://localhost:8080/Final/user/validateemail.htm?useremail=" + useremail+ "&key1="
 							+ randomNum1 + "&key2=" + randomNum2;
 					session.setAttribute("key1", randomNum1);
 					session.setAttribute("key2", randomNum2);
@@ -221,7 +219,7 @@ public class UserController {
 		int randomNum1 = rand.nextInt(5000000);
 		int randomNum2 = rand.nextInt(5000000);
 		try {
-			String str = "http://localhost:8080/blog/user/validateemail.htm?email=" + useremail + "&key1=" + randomNum1
+			String str = "http://localhost:8080/Final/user/validateemail.htm?email=" + useremail + "&key1=" + randomNum1
 					+ "&key2=" + randomNum2;
 			session.setAttribute("key1", randomNum1);
 			session.setAttribute("key2", randomNum2);

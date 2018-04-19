@@ -41,5 +41,32 @@ public class ReplyDAO extends DAO{
 	        }
 	    	
 	    }
+	 
+	 public Reply get(long id){
+			try {
+				begin();
+				Query q = getSession().createQuery("from Reply where replyID= :id");
+				q.setLong("id", id);		
+				Reply re = (Reply) q.uniqueResult();
+				commit();
+				return re;
+			} catch (HibernateException e) {
+				rollback();
+				System.out.println(e);
+			}
+			return null;
+		}
+	 
+	 public void delete(Reply reply)
+	            throws ReplyException {
+	        try {
+	            begin();
+	            getSession().delete(reply);
+	            commit();
+	        } catch (HibernateException e) {
+	            rollback();
+	            throw new ReplyException("Could not delete reply", e);
+	        }
+	    }
 
 }

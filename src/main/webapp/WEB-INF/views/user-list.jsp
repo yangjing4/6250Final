@@ -56,27 +56,6 @@
 		<div class="row">
 			<div class="main">
 				<h1 class="page-header">Dashboard</h1>
-
-				<div class="row placeholders">
-					<div class="col-xs-6 placeholder">
-						<img
-							src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
-							width="200" height="200" class="img-responsive"
-							alt="Generic placeholder thumbnail">
-						<h4>Manager</h4>
-						
-					</div>
-					<div class="col-xs-6  placeholder">
-						<img
-							src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
-							width="200" height="200" class="img-responsive"
-							alt="Generic placeholder thumbnail">
-						<h4>Visitor</h4>
-						
-					</div>
-				</div>
-
-				<h2 class="sub-header">Section title</h2>
 				<div class="table-responsive">
 					<table class="table table-striped">
 						<thead>

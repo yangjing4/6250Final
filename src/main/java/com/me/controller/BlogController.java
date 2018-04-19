@@ -1,6 +1,7 @@
 package com.me.controller;
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -104,6 +105,25 @@ public class BlogController {
 			
 		}
 		
+		@RequestMapping(value = "/blog/listAll", method = RequestMethod.GET)
+		public ModelAndView listAll(HttpServletRequest request) throws Exception {
+
+			try {
+				ModelAndView mv = new ModelAndView();
+				List<Blog> blogs = blogDao.list();
+				List<Category> cats= categoryDAO.list();
+				mv.addObject("blogs", blogs);
+				mv.addObject("cats", cats);
+				mv.setViewName("blog-list");
+				return mv;
+			} catch (BlogException e) {
+				System.out.println(e.getMessage());
+				return new ModelAndView("error", "errorMessage", "error while login");
+			}
+			
+			
+		}
+		
 		@RequestMapping(value = "/blog/mylist", method = RequestMethod.GET)
 		public ModelAndView mylist(HttpServletRequest request) throws Exception {
 
@@ -115,6 +135,64 @@ public class BlogController {
 				mv.addObject("user", user);
 				mv.addObject("blogs", blogs);
 				mv.setViewName("user-dashboard");
+				return mv;
+			} catch (BlogException e) {
+				System.out.println(e.getMessage());
+				return new ModelAndView("error", "errorMessage", "error while login");
+			}
+			
+			
+		}
+		
+		@RequestMapping(value = "/blog/listByCategory", method = RequestMethod.GET)
+		public ModelAndView listByCategory(HttpServletRequest request) throws Exception {
+
+			try {
+				Set<Blog> blogsByCat= new HashSet<Blog>();
+				List<Category> cats= categoryDAO.list();
+				ModelAndView mv = new ModelAndView();
+				long catId= Long.valueOf(request.getParameter("catId"));
+				List<Blog> blogs = blogDao.list();
+				for(Blog blog: blogs) {
+					Set<Category> categories =blog.getCategories();
+					for(Category cat:categories) {
+						if(cat.getCategoryId()==catId) {
+							blogsByCat.add(blog);
+						}
+					}
+				}
+				mv.addObject("blogs", blogsByCat);
+				mv.addObject("cats", cats);
+				mv.setViewName("blogs-list");
+				return mv;
+			} catch (BlogException e) {
+				System.out.println(e.getMessage());
+				return new ModelAndView("error", "errorMessage", "error while login");
+			}
+			
+			
+		}
+		
+		@RequestMapping(value = "/blog/listAllByCategory", method = RequestMethod.GET)
+		public ModelAndView listAllByCategory(HttpServletRequest request) throws Exception {
+
+			try {
+				Set<Blog> blogsByCat= new HashSet<Blog>();
+				List<Category> cats= categoryDAO.list();
+				ModelAndView mv = new ModelAndView();
+				long catId= Long.valueOf(request.getParameter("catId"));
+				List<Blog> blogs = blogDao.list();
+				for(Blog blog: blogs) {
+					Set<Category> categories =blog.getCategories();
+					for(Category cat:categories) {
+						if(cat.getCategoryId()==catId) {
+							blogsByCat.add(blog);
+						}
+					}
+				}
+				mv.addObject("blogs", blogsByCat);
+				mv.addObject("cats", cats);
+				mv.setViewName("blog-list");
 				return mv;
 			} catch (BlogException e) {
 				System.out.println(e.getMessage());
@@ -143,6 +221,14 @@ public class BlogController {
 	            for(Category c:categories) {
 	            	c.getBlogs().remove(blog);
 	            }
+	            Set<Comment> comms= blog.getComments();
+	            for(Comment com:comms) {
+	            	Set<Reply> replys = com.getReplys();
+	            	for(Reply reply : replys) {
+	            		replyDao.delete(reply);
+	            	}
+	            	commentDao.delete(com);
+	            }
 				blogDao.delete(blog);
 				return new ModelAndView("delete-success", "blog", title);		
 			} catch (Exception e) {
@@ -166,9 +252,6 @@ public class BlogController {
             Blog b= blogDao.getbyID(id);
             User user=userDao.get(userId);
             List<Comment> comments =  commentDao.listByBlog(id);
-//            for(Comment com:comments) {
-//            	List<Reply> replys = (List<Reply>) com.getReplys();
-//            }
 			ModelAndView mv = new ModelAndView();
 		    mv.addObject("blog",b);
 		    mv.addObject("user", user);
@@ -190,7 +273,32 @@ public class BlogController {
 			b.setContent(content);
 			b.setTitle(title);
             blogDao.update(b);
-			return new ModelAndView("blog-success");
+			return new ModelAndView("success");
 		}
-
+		
+		@RequestMapping(value = "/blog/search", method = RequestMethod.POST)
+		public ModelAndView searchresult(HttpServletRequest request) throws Exception {
+			String query = request.getParameter("keyword");
+	        String value = request.getParameter("option");
+	        ModelAndView mv = new ModelAndView();
+	        List<Category> cats= categoryDAO.list();
+			mv.addObject("cats", cats);
+			mv.setViewName("blogs-list");
+	        if (value.equals("title")) {
+	        	List<Blog> blogs= blogDao.listByTitle(query);
+	        	mv.addObject("blogs", blogs);
+	        	return mv;
+	        }else if(value.equals("content")){
+	        	List<Blog> blogs= blogDao.listByContent(query);
+	        	mv.addObject("blogs", blogs);
+	        	return mv;
+	        }else if (value.equals("author")) {
+	        	List<Blog> blogs= blogDao.listByAuthor(query);
+	        	mv.addObject("blogs", blogs);
+	        	return mv;	
+	        }
+			
+	        return null;
+		}
+		
 }

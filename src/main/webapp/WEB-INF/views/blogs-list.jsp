@@ -76,6 +76,14 @@
 						layout pattern in Bootstrap. Try some responsive-range viewport
 						sizes to see it in action.</p>
 				</div>
+				<form action="${contextPath}/blog/search.htm" method="post">
+					Keyword:<input type="text" name='keyword' />
+					<input type="radio" name="option" value="title">Title
+					<input type="radio" name="option" value="content">Content
+				    <input type="radio" name="option" value="author">Author
+					<button type="submit" class="btn btn-default">Search</button>	
+				</form>
+
 				<div class="row">
 					<div class="col-xs-6 col-lg-4">
 						<c:forEach var="blog" items="${blogs}">
@@ -95,17 +103,21 @@
 							<!-- /.blog-post -->
 						</c:forEach>
 					</div>
-					<div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar">
-						<div class="list-group">
-						<br>
-						<br>
-						<br>
-							<c:forEach var="cat" items="${cats}">
-								<li><a href="${contextPath}/blog/listByCategory.htm?catId=${cat.categoryId}">${cat.title}</a></li>
-							</c:forEach>
-						</div>
-					</div>
 
+
+				</div>
+			</div>
+			<div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar">
+				<div class="list-group">
+					<br> <br> <br>
+					<ur>
+					<li><a
+						href="${contextPath}/blog/list.htm?userId=${user.personID}">All
+							Blogs</a></li>
+					<c:forEach var="cat" items="${cats}">
+						<li><a
+							href="${contextPath}/blog/listByCategory.htm?catId=${cat.categoryId}">${cat.title}</a></li>
+					</c:forEach> </ur>
 				</div>
 			</div>
 		</div>

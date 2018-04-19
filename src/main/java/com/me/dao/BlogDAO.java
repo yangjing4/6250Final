@@ -112,6 +112,56 @@ public class BlogDAO extends DAO {
     	
     }
     
+	public List<Blog> listByTitle(String title) throws BlogException{
+	    	
+	    	try {
+	            begin();
+	            Query q = getSession().createQuery("from Blog where title like:title");
+	            q.setString("title", "%"+title+"%");
+	            List<Blog> blogs = q.list();
+	            commit();
+	            return blogs;
+	        } catch (HibernateException e) {
+	            rollback();
+	            throw new BlogException("Could not list blogs", e);
+	        }
+	    	
+	    }
+	
+	public List<Blog> listByContent(String content) throws BlogException{
+    	
+    	try {
+            begin();
+            Query q = getSession().createQuery("from Blog where content like:content");
+            q.setString("content", "%"+content+"%");
+            List<Blog> blogs = q.list();
+            commit();
+            return blogs;
+        } catch (HibernateException e) {
+            rollback();
+            throw new BlogException("Could not list blogs", e);
+        }
+    	
+    }
+	
+public List<Blog> listByAuthor(String username) throws BlogException{
+    	
+    	try {
+            begin();
+            Query q = getSession().createQuery("from Blog where user.username =:username");
+            q.setString("username", username);
+            List<Blog> blogs = q.list();
+            commit();
+            return blogs;
+        } catch (HibernateException e) {
+            rollback();
+            throw new BlogException("Could not list blogs", e);
+        }
+    	
+    }
+    
+
+    
     
     
     
