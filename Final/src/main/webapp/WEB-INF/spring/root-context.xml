@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	<bean id="userValidator" class="com.me.validator.UserValidator"></bean> 
+	<bean id="userDao" class="com.me.dao.UserDAO" ></bean>
+	
+	<bean id="categoryValidator" class="com.me.validator.CategoryValidator"></bean>
+	<bean id="categoryDao" class="com.me.dao.CategoryDAO" ></bean>
+	
+	<bean id="blogValidator" class="com.me.validator.BlogValidator"></bean>
+	<bean id="blogDao" class="com.me.dao.BlogDAO" ></bean> 
+	
+	<bean id="commentValidator" class="com.me.validator.CommentValidator"></bean>
+	<bean id="commentDao" class="com.me.dao.CommentDAO" ></bean> 
+	
+	<bean id="replyValidator" class="com.me.validator.ReplyValidator"></bean>
+	<bean id="replyDao" class="com.me.dao.ReplyDAO" ></bean> 
+		
+</beans>
