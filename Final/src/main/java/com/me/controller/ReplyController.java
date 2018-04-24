@@ -65,7 +65,7 @@ public class ReplyController {
 
 			reply = replyDao.create(reply);
 			
-			return new ModelAndView("success", "success", reply);
+			return new ModelAndView("success", "message", "Reply added successfully");
 			
 		} catch (ReplyException e) {
 			System.out.println(e.getMessage());
@@ -85,7 +85,7 @@ public class ReplyController {
             comm.getReplys().remove(re);
             commentDao.update(comm);
             replyDao.delete(re);
-			return new ModelAndView("delete-success", "blog", re);		
+			return new ModelAndView("delete-success", "message", "reply deleted seccessfully");		
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			return new ModelAndView("error", "errorMessage", "error while login");

@@ -61,7 +61,7 @@
 		<div class="blog-header">
 			<h1 class="blog-title">${blog.title}</h1>
 			<p class="blog-post-meta">${blog.date}
-				By<a href="#">${blog.user.username}</a>
+				By <a href="#">${blog.user.username}</a>
 			</p>
 			<p class="lead blog-description">${blog.content}</p>
 			<p>
@@ -75,15 +75,14 @@
 		<p>Comment</p>
 		<c:forEach var="com" items="${comments}">
 			<div class="panel panel-default">
-				<div class="panel-footer">${com.date}PostBy
+				<div class="panel-footer">${com.date} PostBy 
 					${com.user.username}</div>
 				<div class="panel-body">
 					${com.content} <br />
 					<p>Reply</p>
 					<c:forEach var="reply" items="${com.replys}">
 						<div class="panel panel-default">
-							<div class="panel-footer">${reply.date}PostBy
-								${reply.user.username}</div>
+							<div class="panel-footer">${reply.date} PostBy ${reply.user.username}</div>
 							<div class="panel-body">${reply.content}</div>
 						</div>
 						<c:choose>

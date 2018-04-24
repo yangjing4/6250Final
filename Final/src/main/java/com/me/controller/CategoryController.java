@@ -37,19 +37,26 @@ public class CategoryController {
 		public ModelAndView addCategory(@ModelAttribute("category")Category category,BindingResult result) throws Exception {
 			
 //			categoryValidator.validate(category, result);
-			
+			ModelAndView mv = new ModelAndView();
 			
 			if (result.hasErrors()) {
-				return new ModelAndView("category-form", "category", category);
+				mv.addObject("category", category);
+				mv.setViewName("category-form");
+				return mv;
 			}
 
 			try {				
 				category = categoryDao.create(category.getTitle());
 			} catch (CategoryException e) {
 				System.out.println(e.getMessage());
-				return new ModelAndView("error", "errorMessage", "error while login");
+				mv.addObject("errorMessage", "error while login");
+				mv.setViewName("error");
+				return mv;
 			}
-			return new ModelAndView("category-success", "category", category);
+			mv.setViewName("success");
+			mv.addObject("category-success", category);
+			mv.addObject("message", "category added successful");
+		    return mv;
 			
 		}
 

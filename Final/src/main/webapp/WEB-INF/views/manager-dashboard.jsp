@@ -30,13 +30,9 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-             <li><a href="${contextPath}/blog/list?userId=${user.personID}">Home</a></li>
-				<li><a
-					href="${contextPath}/blog/mylist?userId=${user.personID}">My
-						Blog</a></li>
-				<li><a
-					href="${contextPath}/user/update.htm?userId=${user.personID}">My
-						Account</a></li>
+             <li><a href="${contextPath}/user/manager">Home</a></li>
+				<li><a href="${contextPath}/user/list.htm" >View All Users</a></li>
+				<li><a href="${contextPath}/blog/listAll.htm" >View All Blogs</a></li>
           </ul>
         </div><!-- /.nav-collapse -->
       </div><!-- /.container -->

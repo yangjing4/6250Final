@@ -58,10 +58,10 @@
 	
 	<form:form action="${contextPath}/blog/add" method="post"
 		commandName="blog">
-		<div class="form-group">
-			<label for="exampleInputEmail1">Posted By</label>
-			<form:input type="text" path="postedBy" class="form-control"
-				value="${sessionScope.user.personID}" name="postedBy" readonly="true" />
+		 <div class="form-group">
+			<label for="exampleInputEmail1">${sessionScope.user.personID}</label>
+			<form:hidden path="postedBy"
+				value="${sessionScope.user.personID}"/>
 		</div>
 
 		<div class="form-group">

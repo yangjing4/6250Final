@@ -81,7 +81,7 @@ public class CommentController {
 			comment.setBlog(b);
 			comment = commentDao.create(comment);
 			
-			return new ModelAndView("success", "success", comment);
+			return new ModelAndView("success", "message", "comment added successfully");
 			
 		} catch (CommentException e) {
 			System.out.println(e.getMessage());
@@ -107,7 +107,7 @@ public class CommentController {
             	replyDao.delete(re);
             }
             commentDao.delete(comm);
-			return new ModelAndView("delete-success", "blog", comm);		
+			return new ModelAndView("delete-success", "message", "comment deleted successfully");		
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			return new ModelAndView("error", "errorMessage", "error while login");

@@ -330,15 +330,18 @@ public class UserController {
 				for(Category c:categories) {
 	            	c.getBlogs().remove(b);
 	            }
-				blogDao.delete(b);
+				b.setUser(null);
+//				blogDao.delete(b);
 			}
 			Set<Reply> replys = user.getReplys();
 			for(Reply r:replys) {
-				replyDao.delete(r);
+				r.setUser(null);
+//				replyDao.delete(r);
 			}
 			Set<Comment> comments = user.getComments();
 			for(Comment c:comments) {
-				commentDao.delete(c);
+//				commentDao.delete(c);
+				c.setUser(null);
 			}
 			
 			userDao.delete(user);	

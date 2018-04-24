@@ -46,6 +46,6 @@
 
 	<a href="${contextPath}/user/visitor">Home</a><br/>
 
-	<h2>Successfully: ${success}</h2>
+	<h2>Message: ${message}</h2>
 </body>
 </html>

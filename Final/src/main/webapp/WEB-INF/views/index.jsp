@@ -49,8 +49,8 @@
  <div class="jumbotron">
       <div class="container">
         <h1>Hello, world!</h1>
-        <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
-        <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>
+        <p>This is where you can share your idea and emotions, and where you can communicate with others who can understand you!</p>
+        
       </div>
     </div>
  
@@ -71,7 +71,7 @@
 		<c:forEach var="blog" items="${blogs}">
           <div class="blog-post">
             <h2 class="blog-post-title">${blog.title}</h2>
-            <p class="blog-post-meta">${blog.date} By<a href="#">${blog.user.username}</a></p>
+            <p class="blog-post-meta">${blog.date} By <a href="#">${blog.user.username}</a></p>
             <p>${blog.content}</p>
             <p><a class="btn btn-default" href="${contextPath}/user/login.htm" role="button">View details &raquo;</a></p>
            

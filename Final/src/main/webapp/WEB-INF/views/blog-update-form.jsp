@@ -79,14 +79,14 @@
 		</div>
 
 		<div class="form-group">
-			<label for="exampleInputEmail1">Category</label>
+			<label for="exampleInputEmail1">Blog Title</label>
 			<form:input type="text" path="title" class="form-control"
 				value="${blog.title}" required="required" />
 		</div>
 
 		<div class="form-group">
-			<label for="exampleInputEmail1">Category</label>
-			<form:input type="text" path="content" class="form-control"
+			<label for="exampleInputEmail1">Blog Content</label>
+			<form:textarea type="text" path="content" class="form-control" rows='5'
 				value="${blog.content}" required="required" />
 		</div>
 

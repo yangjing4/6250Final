@@ -73,7 +73,7 @@ public class BlogController {
 	            	categoryDAO.update(c);
 	            }
 				
-				return new ModelAndView("success", "success", blog);
+				return new ModelAndView("category-success", "message", "blog added successful");
 				
 			} catch (BlogException e) {
 				System.out.println(e.getMessage());
@@ -230,7 +230,7 @@ public class BlogController {
 	            	commentDao.delete(com);
 	            }
 				blogDao.delete(blog);
-				return new ModelAndView("delete-success", "blog", title);		
+				return new ModelAndView("delete-success", "message", "blog deleted successfully");		
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 				return new ModelAndView("error", "errorMessage", "error while login");
@@ -266,14 +266,24 @@ public class BlogController {
 		@RequestMapping(value = "/blog/update.htm", method = RequestMethod.POST)
 		public ModelAndView updatedBlog(HttpServletRequest request) throws Exception {
 			
+			ModelAndView mv = new ModelAndView();
 			int id= Integer.valueOf(request.getParameter("id"));
 			Blog b= blogDao.getbyID(id);
+	
 			String title =request.getParameter("title");
 			String content =request.getParameter("content");
+			Date date = new Date();
+			DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.MEDIUM,DateFormat.MEDIUM);
+			String formattedDate = dateFormat.format(date);
+			
+			b.setDate(formattedDate);
 			b.setContent(content);
 			b.setTitle(title);
             blogDao.update(b);
-			return new ModelAndView("success");
+            
+            mv.addObject("message", "blog updated successful");
+            mv.setViewName("success");
+			return mv;
 		}
 		
 		@RequestMapping(value = "/blog/search", method = RequestMethod.POST)

@@ -90,7 +90,7 @@
 							<div class="blog-post">
 								<h2 class="blog-post-title">${blog.title}</h2>
 								<p class="blog-post-meta">${blog.date}
-									By<a href="#">${blog.user.username}</a>
+									By <a href="#">${blog.user.username}</a>
 								</p>
 								<p>${blog.content}</p>
 								<p>

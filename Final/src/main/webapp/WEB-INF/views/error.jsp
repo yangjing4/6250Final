@@ -6,14 +6,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 </head>
 <body>
-
 <h1>Error Page</h1>
 <p>${errorMessage}</p>
-
-<c:if test = "${resendLink== true}" >
-	
+<a href="${contextPath}/user/login.htm">Log In</a>
+<c:if test = "${resendLink== true}" >	
 	<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 	<form action="${contextPath}/user/resendemail.htm" method="POST">
 		User Email:<input type="text" name="username" size="30" required="required" />
