@@ -49,11 +49,12 @@ public class ReplyController {
 	
 	@RequestMapping(value = "/reply/add", method = RequestMethod.POST)
 	public ModelAndView addCategory(HttpServletRequest request, @ModelAttribute("reply")Reply reply, BindingResult result) throws Exception {
-
+		ModelAndView mv = new ModelAndView();
+		long userId= Long.valueOf(request.getParameter("userId"));
+		User u = userDao.get(userId);
 		try {
 
-			long userId= Long.valueOf(request.getParameter("userId"));
-			User u = userDao.get(userId);
+			
 			reply.setUser(u);
 			Date date = new Date();
 			DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM);
@@ -64,12 +65,17 @@ public class ReplyController {
 			reply.setComment(com);
 
 			reply = replyDao.create(reply);
-			
-			return new ModelAndView("success", "message", "Reply added successfully");
+			mv.addObject("user", u);
+			mv.addObject("message", "Reply added successfully");
+			mv.setViewName("success");
+			return mv;
 			
 		} catch (ReplyException e) {
 			System.out.println(e.getMessage());
-			return new ModelAndView("error", "errorMessage", "error while login");
+			mv.addObject("user", u);
+			mv.addObject("errorMessage", "error while login");
+			mv.setViewName("error");
+			return mv;
 		}
 		
 		
@@ -77,6 +83,9 @@ public class ReplyController {
 	
 	@RequestMapping(value = "/reply/delete.htm", method = RequestMethod.GET)
 	public ModelAndView deleteComment(HttpServletRequest request) throws Exception {
+		ModelAndView mv = new ModelAndView();
+		long userId= Long.valueOf(request.getParameter("userId"));
+		User user = userDao.get(userId);
 
 		try {	
 			long id =Long.valueOf(request.getParameter("id"));
@@ -85,11 +94,21 @@ public class ReplyController {
             comm.getReplys().remove(re);
             commentDao.update(comm);
             replyDao.delete(re);
-			return new ModelAndView("delete-success", "message", "reply deleted seccessfully");		
+            mv.addObject("user", user);
+            mv.addObject("message", "reply deleted seccessfully");
+            mv.setViewName("delete-success");
+			return mv;		
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
-			return new ModelAndView("error", "errorMessage", "error while login");
+			mv.addObject("user", user);
+			mv.setViewName("error");
+			return mv;
 		}	
+	}
+	
+	@RequestMapping(value = "/reply/error",method=RequestMethod.GET)
+	public ModelAndView error() throws Exception {
+		return new ModelAndView("injectionError");	
 	}
 
 }

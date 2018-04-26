@@ -18,7 +18,7 @@ public class Reply {
 	private long replyID;
 	
 	
-	@Column(name="content", nullable = false)
+	@Column(name="content")
     private String content;
 	
 	@Column(name="date")

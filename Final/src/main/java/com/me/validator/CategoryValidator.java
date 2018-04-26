@@ -23,23 +23,22 @@ public class CategoryValidator implements Validator {
 	}
 
 	public void validate(Object obj, Errors errors) {
-		Category cat = (Category) obj;
-		
+		Category newCategory = (Category) obj;
 
+        //System.out.println(newCategory.getTitle());
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "title", "error.invalid.category", "Category Required");
 		
 		if (errors.hasErrors()) {
             return;//Skip the rest of the validation rules
         }
         
-	
-		try {		
-			Category c = categoryDao.get("Cc");
-			System.out.println(c.getTitle());
+		try {
+			Category c = categoryDao.get(newCategory.getTitle());
 			if(c !=null)
 				errors.rejectValue("title", "error.invalid.category", "Category already Exists");
 			
-		} catch (CategoryException e) {
+		} 
+		catch (CategoryException e) {
 			System.err.println("Exception in Category Validator");
 		}
 		

@@ -106,12 +106,12 @@ public class UserController {
 		return "manager-dashboard";
 	}
 
-	@RequestMapping(value = "/user/login.htm", method = RequestMethod.GET)
+	@RequestMapping(value = "/user/login", method = RequestMethod.GET)
 	public String showLoginForm() {
 		return "user-login";
 	}
 
-	@RequestMapping(value = "/user/login.htm", method = RequestMethod.POST)
+	@RequestMapping(value = "/user/login", method = RequestMethod.POST)
 	public ModelAndView handleLoginForm(HttpServletRequest request,ModelMap map) {
 		
 		HttpSession session = (HttpSession) request.getSession();
@@ -149,7 +149,7 @@ public class UserController {
 	}
 
 	
-	@RequestMapping(value = "/user/create.htm", method = RequestMethod.GET)
+	@RequestMapping(value = "/user/create", method = RequestMethod.GET)
 	protected ModelAndView registerUser() throws Exception {
 		System.out.print("registerUser");
 
@@ -157,7 +157,7 @@ public class UserController {
 
 	}
 
-	@RequestMapping(value = "/user/create.htm", method = RequestMethod.POST)
+	@RequestMapping(value = "/user/create", method = RequestMethod.POST)
 	public String handleCreateForm(HttpServletRequest request,@ModelAttribute("user") User user, BindingResult result, ModelMap map) {
 		Captcha captcha = Captcha.load(request, "CaptchaObject");
 		String captchaCode = request.getParameter("captchaCode");
@@ -223,7 +223,7 @@ public class UserController {
 		}
 	}
 
-	@RequestMapping(value = "user/resendemail.htm", method = RequestMethod.POST)
+	@RequestMapping(value = "/user/resendemail.htm", method = RequestMethod.POST)
 	public String resendEmail(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		String useremail = request.getParameter("useremail");
@@ -262,7 +262,7 @@ public class UserController {
 		}
 	}
 
-	@RequestMapping(value = "user/validateemail.htm", method = RequestMethod.GET)
+	@RequestMapping(value = "/user/validateemail.htm", method = RequestMethod.GET)
 	public String validateEmail(HttpServletRequest request,ModelMap map) {
 
 		// The user will be sent the following link when the use registers
@@ -270,8 +270,8 @@ public class UserController {
 		// http://hostname:8080/lab10/user/validateemail.htm?email=useremail&key1=<random_number>&key2=<body
 		// of the email that when user registers>
 		HttpSession session = request.getSession();
-		String email = request.getParameter("email");
-		String username= request.getParameter("username");
+		String useremail = request.getParameter("useremail");
+//		String username= request.getParameter("username");
 		int key1 = Integer.parseInt(request.getParameter("key1"));
 		int key2 = Integer.parseInt(request.getParameter("key2"));
 		System.out.println(session.getAttribute("key1") );
@@ -281,7 +281,7 @@ public class UserController {
 		if ((Integer)(session.getAttribute("key1")) == key1 && ((Integer)session.getAttribute("key2"))== key2) {
 			try {
 				System.out.println("HI________");
-				boolean updateStatus = userDao.updateUser(username);
+				boolean updateStatus = userDao.updateUser(useremail);
 				if (updateStatus) {
 					return "user-login";
 				} else {
@@ -352,7 +352,7 @@ public class UserController {
 		}	
 	}
 	
-	@RequestMapping(value = "/user/update.htm", method = RequestMethod.GET)
+	@RequestMapping(value = "/user/update", method = RequestMethod.GET)
 	public ModelAndView updateUser(HttpServletRequest request) throws Exception {
 
 		int id =Integer.valueOf(request.getParameter("userId"));
@@ -360,7 +360,7 @@ public class UserController {
 		return new ModelAndView("user-update-form", "user", u);
 	}
 
-	@RequestMapping(value = "/user/update.htm", method = RequestMethod.POST)
+	@RequestMapping(value = "/user/update", method = RequestMethod.POST)
 	public ModelAndView updatedUser(HttpServletRequest request) throws Exception {
 		
 		int id =Integer.valueOf(request.getParameter("personID"));        
@@ -375,5 +375,11 @@ public class UserController {
 
 		
 		return new ModelAndView("user-success","user",username);
+
+	}
+	
+	@RequestMapping(value = "/user/error", method=RequestMethod.GET)
+	public ModelAndView error() throws Exception {
+		return new ModelAndView("injectionError");	
 	}
 }

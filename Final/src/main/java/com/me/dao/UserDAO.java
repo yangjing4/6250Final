@@ -93,13 +93,13 @@ public class UserDAO extends DAO {
 		}
 	}
 	
-	public boolean updateUser(String username) throws Exception {
+	public boolean updateUser(String email) throws Exception {
 		try {
 			begin();
 			System.out.println("inside DAO");
-			Query q = getSession().createQuery("from User where username = :username");
-			q.setString("username", username);
-		    User user = (User) q.uniqueResult();
+			Query q = getSession().createQuery("from User where email.emailAddress = :useremail");
+			q.setString("useremail", email);
+			User user = (User) q.uniqueResult();
 			if(user!=null){
 				user.setStatus(1);
 				getSession().update(user);

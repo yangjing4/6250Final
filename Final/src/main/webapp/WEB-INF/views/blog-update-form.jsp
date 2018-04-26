@@ -38,8 +38,9 @@
 					href="${contextPath}/blog/mylist?userId=${user.personID}">My
 						Blog</a></li>
 				<li><a
-					href="${contextPath}/user/myaccount?userId=${user.personID}">My
+					href="${contextPath}/user/update?userId=${user.personID}">My
 						Account</a></li>
+				<li><a href="${contextPath}/user/login.htm">Log out</a></li>
 			</ul>
 		</div>
 		<!-- /.nav-collapse -->
@@ -51,19 +52,17 @@
 	<br />
 	<br />
 
-
-	<a href="${contextPath}/user/visitor">Home</a>
 	<br />
 
 	<h2>Updating a New Blog</h2>
 
 
-	<form:form action="${contextPath}/blog/update.htm" method="post"
+	<form:form action="${contextPath}/blog/update" method="post"
 		commandName="blog">
 		<div class="form-group">
 			<label for="exampleInputEmail1">Posted By</label>
 			<form:input type="text" path="postedBy" class="form-control"
-				value="${sessionScope.user.username}" name="postBy" readonly="true" />
+				value="${sessionScope.user.personID}" name="postedBy" readonly="true" />
 		</div>
 
 		<div class="form-group">
@@ -86,8 +85,8 @@
 
 		<div class="form-group">
 			<label for="exampleInputEmail1">Blog Content</label>
-			<form:textarea type="text" path="content" class="form-control" rows='5'
-				value="${blog.content}" required="required" />
+			<form:textarea type="text" path="content" class="form-control"
+				rows='5' value="${blog.content}" required="required" />
 		</div>
 
 		<input type="submit" class="btn btn-default" value="Update Blog" />

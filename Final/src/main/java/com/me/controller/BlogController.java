@@ -53,10 +53,12 @@ public class BlogController {
 		
 
 		@RequestMapping(value = "/blog/add", method = RequestMethod.POST)
-		public ModelAndView addCategory(@ModelAttribute("blog") Blog blog, BindingResult result) throws Exception {
+		public ModelAndView addCategory(@ModelAttribute("blog") Blog blog, HttpServletRequest request,BindingResult result) throws Exception {
 
-			try {			
-				
+			try {	
+				ModelAndView mv = new ModelAndView();
+				long userId= Long.valueOf(request.getParameter("userId"));
+				User user= userDao.get(userId);
 				User u = userDao.get(blog.getPostedBy());
 				blog.setUser(u);
 				Date date = new Date();
@@ -72,8 +74,10 @@ public class BlogController {
 	            	c.getBlogs().add(blog);
 	            	categoryDAO.update(c);
 	            }
-				
-				return new ModelAndView("category-success", "message", "blog added successful");
+	            mv.addObject("user", user);
+	            mv.addObject("message", "blog added successful");
+	            mv.setViewName("category-success");
+				return mv;
 				
 			} catch (BlogException e) {
 				System.out.println(e.getMessage());
@@ -146,11 +150,13 @@ public class BlogController {
 		
 		@RequestMapping(value = "/blog/listByCategory", method = RequestMethod.GET)
 		public ModelAndView listByCategory(HttpServletRequest request) throws Exception {
+			ModelAndView mv= new ModelAndView();
+			long userId=Long.valueOf(request.getParameter("userId"));
+			User user=userDao.get(userId);
 
 			try {
 				Set<Blog> blogsByCat= new HashSet<Blog>();
 				List<Category> cats= categoryDAO.list();
-				ModelAndView mv = new ModelAndView();
 				long catId= Long.valueOf(request.getParameter("catId"));
 				List<Blog> blogs = blogDao.list();
 				for(Blog blog: blogs) {
@@ -163,11 +169,15 @@ public class BlogController {
 				}
 				mv.addObject("blogs", blogsByCat);
 				mv.addObject("cats", cats);
+				mv.addObject("user", user);
 				mv.setViewName("blogs-list");
 				return mv;
 			} catch (BlogException e) {
 				System.out.println(e.getMessage());
-				return new ModelAndView("error", "errorMessage", "error while login");
+				mv.addObject("user", user);
+				mv.addObject("errorMessage", "error while login");
+				mv.setViewName("error");
+				return mv;
 			}
 			
 			
@@ -175,11 +185,13 @@ public class BlogController {
 		
 		@RequestMapping(value = "/blog/listAllByCategory", method = RequestMethod.GET)
 		public ModelAndView listAllByCategory(HttpServletRequest request) throws Exception {
+			ModelAndView mv= new ModelAndView();
+			long userId=Long.valueOf(request.getParameter("userId"));
+			User user=userDao.get(userId);
 
 			try {
 				Set<Blog> blogsByCat= new HashSet<Blog>();
 				List<Category> cats= categoryDAO.list();
-				ModelAndView mv = new ModelAndView();
 				long catId= Long.valueOf(request.getParameter("catId"));
 				List<Blog> blogs = blogDao.list();
 				for(Blog blog: blogs) {
@@ -192,11 +204,15 @@ public class BlogController {
 				}
 				mv.addObject("blogs", blogsByCat);
 				mv.addObject("cats", cats);
+				mv.addObject("user", user);
 				mv.setViewName("blog-list");
 				return mv;
 			} catch (BlogException e) {
 				System.out.println(e.getMessage());
-				return new ModelAndView("error", "errorMessage", "error while login");
+				mv.addObject("user", user);
+				mv.addObject("errorMessage", "error while login");
+				mv.setViewName("error");
+				return mv;
 			}
 			
 			
@@ -205,6 +221,9 @@ public class BlogController {
 		@RequestMapping(value="/blog/add", method = RequestMethod.GET)
 		public ModelAndView initializeForm(HttpServletRequest request) throws Exception {		
 			ModelAndView mv = new ModelAndView();
+			long userId= Long.valueOf(request.getParameter("userId"));
+			User user= userDao.get(userId);
+			mv.addObject("user", user);
 			mv.addObject("categories", categoryDAO.list());			
 			mv.addObject("blog", new Blog());
 			mv.setViewName("blog-form");
@@ -213,10 +232,12 @@ public class BlogController {
 		
 		@RequestMapping(value = "/blog/delete.htm", method = RequestMethod.GET)
 		public ModelAndView deleteBlog(HttpServletRequest request) throws Exception {
-
+			ModelAndView mv= new ModelAndView();
+			long userId=Long.valueOf(request.getParameter("userId"));
+			User user=userDao.get(userId);
 			try {	
-				String title =request.getParameter("title");
-	            Blog blog= blogDao.get(title);
+				int id =Integer.valueOf(request.getParameter("id"));
+	            Blog blog= blogDao.getbyID(id);
 	            Set<Category> categories =blog.getCategories();
 	            for(Category c:categories) {
 	            	c.getBlogs().remove(blog);
@@ -230,19 +251,30 @@ public class BlogController {
 	            	commentDao.delete(com);
 	            }
 				blogDao.delete(blog);
-				return new ModelAndView("delete-success", "message", "blog deleted successfully");		
+				mv.addObject("user", user);
+				mv.addObject("message", "blog deleted successfully");
+				mv.setViewName("delete-success");
+				return mv;	
 			} catch (Exception e) {
+				mv.addObject("user", user);
+				mv.addObject("errorMessage", "error while login");
+				mv.setViewName("error");		
 				System.out.println(e.getMessage());
-				return new ModelAndView("error", "errorMessage", "error while login");
+				return mv;
 			}	
 		}
 		
 		@RequestMapping(value = "/blog/update.htm", method = RequestMethod.GET)
 		public ModelAndView updateBlog(HttpServletRequest request) throws Exception {
-
+			ModelAndView mv= new ModelAndView();
+			long userId=Long.valueOf(request.getParameter("userId"));
+			User user=userDao.get(userId);
 			String title =request.getParameter("title");
             Blog b= blogDao.get(title);
-			return new ModelAndView("blog-update-form", "blog", b);
+            mv.addObject("blog", b);
+            mv.addObject("user", user);
+            mv.setViewName("blog-update-form");
+			return mv;
 		}
 		
 		@RequestMapping(value = "/blog/detail.htm", method = RequestMethod.GET)
@@ -263,7 +295,7 @@ public class BlogController {
 			return mv;
 		}
 
-		@RequestMapping(value = "/blog/update.htm", method = RequestMethod.POST)
+		@RequestMapping(value = "/blog/update", method = RequestMethod.POST)
 		public ModelAndView updatedBlog(HttpServletRequest request) throws Exception {
 			
 			ModelAndView mv = new ModelAndView();
@@ -280,7 +312,8 @@ public class BlogController {
 			b.setContent(content);
 			b.setTitle(title);
             blogDao.update(b);
-            
+            User user= b.getUser();
+            mv.addObject("user", user);
             mv.addObject("message", "blog updated successful");
             mv.setViewName("success");
 			return mv;
@@ -290,25 +323,41 @@ public class BlogController {
 		public ModelAndView searchresult(HttpServletRequest request) throws Exception {
 			String query = request.getParameter("keyword");
 	        String value = request.getParameter("option");
+	        long userId=Long.valueOf(request.getParameter("userId"));
+			User user=userDao.get(userId);
 	        ModelAndView mv = new ModelAndView();
 	        List<Category> cats= categoryDAO.list();
 			mv.addObject("cats", cats);
 			mv.setViewName("blogs-list");
-	        if (value.equals("title")) {
+			if(value==null) {
+				mv.addObject("user", user);
+				mv.addObject("message", "please select one option to search");
+				mv.setViewName("success");
+				return mv;
+			}else if (value.equals("title")) {
 	        	List<Blog> blogs= blogDao.listByTitle(query);
 	        	mv.addObject("blogs", blogs);
+	        	mv.addObject("user", user);
 	        	return mv;
 	        }else if(value.equals("content")){
 	        	List<Blog> blogs= blogDao.listByContent(query);
+	        	mv.addObject("user", user);
 	        	mv.addObject("blogs", blogs);
 	        	return mv;
 	        }else if (value.equals("author")) {
 	        	List<Blog> blogs= blogDao.listByAuthor(query);
+	        	mv.addObject("user", user);
 	        	mv.addObject("blogs", blogs);
 	        	return mv;	
 	        }
+	        
 			
 	        return null;
+		}
+		
+		@RequestMapping(value = "/blog/error",method=RequestMethod.GET)
+		public ModelAndView error() throws Exception {
+			return new ModelAndView("injectionError");	
 		}
 		
 }

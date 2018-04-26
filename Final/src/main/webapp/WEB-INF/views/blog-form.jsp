@@ -18,7 +18,7 @@
 </head>
 <body>
 
-<nav class="navbar navbar-fixed-top navbar-inverse">
+	<nav class="navbar navbar-fixed-top navbar-inverse">
 		<div class="container">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle collapsed"
@@ -40,6 +40,7 @@
 					<li><a
 						href="${contextPath}/user/update.htm?userId=${user.personID}">My
 							Account</a></li>
+					<li><a href="${contextPath}/user/login.htm">Log out</a></li>
 				</ul>
 			</div>
 			<!-- /.nav-collapse -->
@@ -51,23 +52,21 @@
 	<br />
 	<br />
 	<br />
-
-	<a href="${contextPath}/user/visitor">Home</a><br/>
+	<br />
 
 	<h2>Posting a New Blog</h2>
-	
-	<form:form action="${contextPath}/blog/add" method="post"
+
+	<form:form action="${contextPath}/blog/add?userId=${user.personID}" method="post"
 		commandName="blog">
-		 <div class="form-group">
+		<div class="form-group">
 			<label for="exampleInputEmail1">${sessionScope.user.personID}</label>
-			<form:hidden path="postedBy"
-				value="${sessionScope.user.personID}"/>
+			<form:hidden path="postedBy" value="${sessionScope.user.personID}" />
 		</div>
 
 		<div class="form-group">
 			<label for="exampleInputEmail1">Category</label>
-			<form:select path="categories" items="${categories}"
-						multiple="true" required="required" />
+			<form:select path="categories" items="${categories}" multiple="true"
+				required="required" />
 		</div>
 
 		<div class="form-group">
@@ -79,7 +78,7 @@
 		<div class="form-group">
 			<label for="exampleInputEmail1">Blog Content</label>
 			<form:textarea type="text" path="content" class="form-control"
-				value="${blog.content}" required="required"  row="10"/>
+				value="${blog.content}" required="required" row="10" />
 		</div>
 
 		<input type="submit" class="btn btn-default" value="Post Blog" />

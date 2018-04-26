@@ -40,12 +40,13 @@
 
 	<font color="red">${captchamsg}</font>
 	<form action="${contextPath}/user/forgotpassword.htm" method="POST">
-	
+
 		<div class="form-group">
-		    <label for="exampleInputEmail1">Enter your email</label>
-		    <input type="email" class="form-control" name="useremail" placeholder="Email" required="required"/>
-	  </div>
-	  <div class="form-group">
+			<label for="exampleInputEmail1">Enter your email</label> <input
+				type="email" class="form-control" name="useremail"
+				placeholder="Email" required="required" />
+		</div>
+		<div class="form-group">
 	  <label for="captchaCode" class="prompt">Retype the characters from the picture:</label> 
 				<%
 					// Adding BotDetect Captcha to the page

@@ -4,19 +4,22 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Category Created Successful</title>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Category Created Successful</title>
 
-     <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
-	 <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
-	 <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	 
-	 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
-    </head>
-    <body>
-    
-    <nav class="navbar navbar-fixed-top navbar-inverse">
+<link rel="stylesheet"
+	href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+<script
+	src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+<script
+	src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
+</head>
+<body>
+
+	<nav class="navbar navbar-fixed-top navbar-inverse">
 		<div class="container">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle collapsed"
@@ -35,20 +38,22 @@
 						href="${contextPath}/blog/mylist?userId=${user.personID}">My
 							Blog</a></li>
 					<li><a
-						href="${contextPath}/user/myaccount?userId=${user.personID}">My
+						href="${contextPath}/user/update?userId=${user.personID}">My
 							Account</a></li>
+					<li><a href="${contextPath}/user/login.htm">Log out</a></li>
 				</ul>
 			</div>
 			<!-- /.nav-collapse -->
 		</div>
 		<!-- /.container -->
 	</nav>
- <br/>
+	<br />
 
 
-	    <a href="${contextPath}/user/visitor">Home</a><br/>
-    
-        <h2>${message}</h2>
-        
-    </body>
+	<a href="${contextPath}/user/visitor">Home</a>
+	<br />
+
+	<h2>${message}</h2>
+
+</body>
 </html>

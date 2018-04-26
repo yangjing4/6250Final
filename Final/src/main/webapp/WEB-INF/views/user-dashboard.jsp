@@ -40,8 +40,9 @@
 						href="${contextPath}/blog/mylist?userId=${user.personID}">My
 							Blog</a></li>
 					<li><a
-						href="${contextPath}/user/update.htm?userId=${user.personID}">My
+						href="${contextPath}/user/update?userId=${user.personID}">My
 							Account</a></li>
+					<li><a href="${contextPath}/user/login.htm">Log out</a></li>
 				</ul>
 			</div>
 			<!-- /.nav-collapse -->
@@ -61,9 +62,8 @@
 
 			<div class="col-sm-3 col-md-2 sidebar">
 				<ul class="nav nav-sidebar">
-					<li><a href="${contextPath}/category/add.htm">Add
-							Category</a></li>
-					<li><a href="${contextPath}/blog/add.htm">Add Blog</a></li>
+					<li><a href="${contextPath}/category/add.htm?userId=${user.personID}">Add Category</a></li>
+					<li><a href="${contextPath}/blog/add.htm?userId=${user.personID}">Add Blog</a></li>
 					<li><a href="${contextPath}/blog/list?userId=${user.personID}">View
 							All Blogs</a></li>
 				</ul>
@@ -82,10 +82,11 @@
 						<p>
 							<a class="btn btn-default"
 								href="${contextPath}/blog/detail.htm?blogId=${blog.id}&&userId=${user.personID}"
-								role="button">View details &raquo;</a>  <a role="button" class="btn btn-default"
-								href="${contextPath}/blog/update.htm?id=${blog.id}&&title=${blog.title}&&content=${blog.content}">Update</a>
+								role="button">View details &raquo;</a> <a role="button"
+								class="btn btn-default"
+								href="${contextPath}/blog/update.htm?id=${blog.id}&&title=${blog.title}&&content=${blog.content}&&userId=${user.personID}">Update</a>
 							<a role="button" class="btn btn-default"
-								href="${contextPath}/blog/delete.htm?title=${blog.title}">Delete</a>
+								href="${contextPath}/blog/delete.htm?id=${blog.id}&&userId=${user.personID}">Delete</a>
 						</p>
 
 					</div>

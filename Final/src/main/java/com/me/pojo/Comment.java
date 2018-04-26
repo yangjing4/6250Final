@@ -26,7 +26,7 @@ public class Comment {
 	private long commentID;
 	
 	
-	@Column(name="content", nullable = false)
+	@Column(name="content")
     private String content;
 	
 	@Column(name="date")

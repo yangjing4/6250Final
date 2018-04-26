@@ -46,8 +46,9 @@
 						href="${contextPath}/blog/mylist?userId=${user.personID}">My
 							Blog</a></li>
 					<li><a
-						href="${contextPath}/user/myaccount?userId=${user.personID}">My
+						href="${contextPath}/user/update?userId=${user.personID}">My
 							Account</a></li>
+					<li><a href="${contextPath}/user/login.htm">Log out</a></li>
 				</ul>
 			</div>
 			<!-- /.nav-collapse -->
@@ -76,12 +77,12 @@
 						layout pattern in Bootstrap. Try some responsive-range viewport
 						sizes to see it in action.</p>
 				</div>
-				<form action="${contextPath}/blog/search.htm" method="post">
-					Keyword:<input type="text" name='keyword' />
-					<input type="radio" name="option" value="title">Title
-					<input type="radio" name="option" value="content">Content
-				    <input type="radio" name="option" value="author">Author
-					<button type="submit" class="btn btn-default">Search</button>	
+				<form action="${contextPath}/blog/search.htm?userId=${user.personID}" method="post">
+					Keyword:<input type="text" name='keyword' required="required"/> <input type="radio"
+						name="option" value="title">Title <input type="radio"
+						name="option" value="content">Content <input type="radio"
+						name="option" value="author">Author
+					<button type="submit" class="btn btn-default">Search</button>
 				</form>
 
 				<div class="row">
@@ -116,7 +117,7 @@
 							Blogs</a></li>
 					<c:forEach var="cat" items="${cats}">
 						<li><a
-							href="${contextPath}/blog/listByCategory.htm?catId=${cat.categoryId}">${cat.title}</a></li>
+							href="${contextPath}/blog/listByCategory.htm?catId=${cat.categoryId}&&userId=${user.personID}">${cat.title}</a></li>
 					</c:forEach> </ur>
 				</div>
 			</div>

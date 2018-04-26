@@ -44,8 +44,9 @@
 					href="${contextPath}/blog/mylist?userId=${user.personID}">My
 						Blog</a></li>
 				<li><a
-					href="${contextPath}/user/update.htm?userId=${user.personID}">My
+					href="${contextPath}/user/update?userId=${user.personID}">My
 						Account</a></li>
+				<li><a href="${contextPath}/user/login.htm">Log out</a></li>
 			</ul>
 		</div>
 		<!-- /.nav-collapse -->
@@ -89,13 +90,13 @@
 							<c:when test="${(user.personID eq blog.user.personID)}">
 								<p>
 									<a role="button" class="btn btn-default"
-										href="${contextPath}/reply/delete.htm?id=${reply.replyID}&&rep_userId=${reply.user.personID}">Delete</a>
+										href="${contextPath}/reply/delete.htm?id=${reply.replyID}&&rep_userId=${reply.user.personID}&&userId=${user.personID}">Delete</a>
 								</p>
 							</c:when>
 							<c:when test="${(user.personID eq reply.user.personID)}">
 								<p>
 									<a role="button" class="btn btn-default"
-										href="${contextPath}/reply/delete.htm?id=${reply.replyID}&&rep_userId=${reply.user.personID}">Delete</a>
+										href="${contextPath}/reply/delete.htm?id=${reply.replyID}&&rep_userId=${reply.user.personID}&&userId=${user.personID}">Delete</a>
 								</p>
 							</c:when>
 						</c:choose>
@@ -113,7 +114,7 @@
 			<c:if test="${(user.personID eq blog.user.personID)}">
 				<p>
 					<a role="button" class="btn btn-default"
-						href="${contextPath}/comment/delete.htm?id=${com.commentID}&&com_userId=${com.user.personID}">Delete</a>
+						href="${contextPath}/comment/delete.htm?id=${com.commentID}&&com_userId=${com.user.personID}&&userId=${user.personID}">Delete</a>
 				</p>
 			</c:if>
 		</c:forEach>

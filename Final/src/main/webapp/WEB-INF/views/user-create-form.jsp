@@ -8,10 +8,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>User Registration</title>
-<link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
- <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
- <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
- <c:set var="contextPath" value="${pageContext.request.contextPath}" />
+<link rel="stylesheet"
+	href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+<script
+	src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+<script
+	src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 </head>
 <body>
 
@@ -30,7 +33,7 @@
           <ul class="nav navbar-nav">
             <li class="active"><a href="${contextPath}/">Home</a></li>
             <li><a href="${contextPath}/user/login.htm">Log In</a></li>
-            <li><a href="${contextPath}/user/create.htm">Register</a></li>
+            <li><a href="${contextPath}/user/create">Register</a></li>
           </ul>
         </div><!-- /.nav-collapse -->
       </div><!-- /.container -->
@@ -43,7 +46,7 @@
 <font color="red">${errorMessage}</font>
 	
 	<div class="container">
-	<form:form  class="form-signin" action="${contextPath}/user/create.htm" commandName="user" method="post">
+	<form:form  class="form-signin" action="${contextPath}/user/create" commandName="user" method="post">
 	<h2 class="form-signin-heading">Please Register a New Account</h2>
 
 		<div class="form-group">
