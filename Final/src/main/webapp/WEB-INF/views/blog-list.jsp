@@ -86,7 +86,7 @@
                     </c:forEach></td>
 									<td>${blog.date}</td>
 									<td><b> <a type="button"
-											href="${contextPath}/blog/delete.htm?title=${blog.title}">Delete</a>
+											href="${contextPath}/blog/managerdelete.htm?id=${blog.id}">Delete</a>
 									</b></td>
 								</tr>
 							</c:forEach>

@@ -76,7 +76,7 @@
 									<td>${user.email.emailAddress}</td>
 									<td>${user.type}</td>
 									<td><b>[<a type="button"
-											href="${contextPath}/user/update.htm?userId=${user.personID}&&username=${user.username}&&firstName=${user.firstName}&&lastName=${user.lastName}&&email=${user.email.emailAddress}">Update</a>]
+											href="${contextPath}/user/managerupdate.htm?userId=${user.personID}&&username=${user.username}&&firstName=${user.firstName}&&lastName=${user.lastName}&&email=${user.email.emailAddress}">Update</a>]
 											[<a type="button"
 											href="${contextPath}/user/delete.htm?userId=${user.personID}">Delete</a>]
 									</b></td>

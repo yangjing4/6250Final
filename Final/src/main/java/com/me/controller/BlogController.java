@@ -186,8 +186,6 @@ public class BlogController {
 		@RequestMapping(value = "/blog/listAllByCategory", method = RequestMethod.GET)
 		public ModelAndView listAllByCategory(HttpServletRequest request) throws Exception {
 			ModelAndView mv= new ModelAndView();
-			long userId=Long.valueOf(request.getParameter("userId"));
-			User user=userDao.get(userId);
 
 			try {
 				Set<Blog> blogsByCat= new HashSet<Blog>();
@@ -204,12 +202,10 @@ public class BlogController {
 				}
 				mv.addObject("blogs", blogsByCat);
 				mv.addObject("cats", cats);
-				mv.addObject("user", user);
 				mv.setViewName("blog-list");
 				return mv;
 			} catch (BlogException e) {
 				System.out.println(e.getMessage());
-				mv.addObject("user", user);
 				mv.addObject("errorMessage", "error while login");
 				mv.setViewName("error");
 				return mv;
@@ -264,13 +260,43 @@ public class BlogController {
 			}	
 		}
 		
+		@RequestMapping(value = "/blog/managerdelete.htm", method = RequestMethod.GET)
+		public ModelAndView managerdeleteBlog(HttpServletRequest request) throws Exception {
+			ModelAndView mv= new ModelAndView();
+			try {	
+				int id =Integer.valueOf(request.getParameter("id"));
+	            Blog blog= blogDao.getbyID(id);
+	            Set<Category> categories =blog.getCategories();
+	            for(Category c:categories) {
+	            	c.getBlogs().remove(blog);
+	            }
+	            Set<Comment> comms= blog.getComments();
+	            for(Comment com:comms) {
+	            	Set<Reply> replys = com.getReplys();
+	            	for(Reply reply : replys) {
+	            		replyDao.delete(reply);
+	            	}
+	            	commentDao.delete(com);
+	            }
+				blogDao.delete(blog);
+				mv.addObject("message", "blog deleted successfully");
+				mv.setViewName("manager-message");
+				return mv;	
+			} catch (Exception e) {
+				mv.addObject("message", "error while login");
+				mv.setViewName("manager-message");		
+				System.out.println(e.getMessage());
+				return mv;
+			}	
+		}
+		
 		@RequestMapping(value = "/blog/update.htm", method = RequestMethod.GET)
 		public ModelAndView updateBlog(HttpServletRequest request) throws Exception {
 			ModelAndView mv= new ModelAndView();
 			long userId=Long.valueOf(request.getParameter("userId"));
 			User user=userDao.get(userId);
-			String title =request.getParameter("title");
-            Blog b= blogDao.get(title);
+			int id =Integer.valueOf(request.getParameter("id"));
+            Blog b= blogDao.getbyID(id);
             mv.addObject("blog", b);
             mv.addObject("user", user);
             mv.setViewName("blog-update-form");

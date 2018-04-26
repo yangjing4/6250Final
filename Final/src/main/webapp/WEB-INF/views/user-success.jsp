@@ -26,10 +26,19 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#">BLOG</a>
+				<a class="navbar-brand" href="#">${user.username}'s BLOG</a>
 			</div>
 			<div id="navbar" class="collapse navbar-collapse">
 				<ul class="nav navbar-nav">
+					<li class="active"><a
+						href="${contextPath}/blog/list?userId=${user.personID}">Home</a></li>
+					<li><a
+						href="${contextPath}/blog/mylist?userId=${user.personID}">My
+							Blog</a></li>
+					<li><a
+						href="${contextPath}/user/update?userId=${user.personID}">My
+							Account</a></li>
+					<li><a href="${contextPath}/user/login.htm">Log out</a></li>
 				</ul>
 			</div>
 			<!-- /.nav-collapse -->
@@ -43,6 +52,6 @@
 	<br />
 	<br />
 
-	<h2>User Updated Successfully: ${user}</h2>
+	<h2>User Updated Successfully: ${user.username}</h2>
 </body>
 </html>

@@ -87,7 +87,9 @@ public class UserController {
 			
 			List<Blog> blogs = blogDao.list();
 			List<Category> cats= categoryDao.list();
-			map.addAttribute("blogs", blogs);
+			if(blogs.size()>0) {
+				map.addAttribute("blogs", blogs);
+			}
 			map.addAttribute("cats", cats);
 			return new ModelAndView("index","map",map);
 		} catch (BlogException e) {
@@ -323,15 +325,18 @@ public class UserController {
 		try {	
 			long id =Long.valueOf(request.getParameter("userId")); 
 			User user = userDao.get(id);
-			
-			Set<Blog> blogs = user.getBlogs();
-			for(Blog b: blogs) {
-				Set<Category> categories =b.getCategories();
-				for(Category c:categories) {
-	            	c.getBlogs().remove(b);
-	            }
-				b.setUser(null);
-//				blogDao.delete(b);
+			if(user.getType().equals("Manager")) {
+				return new ModelAndView("manager-message","message","You can not delete a Manager Account");
+			}else {
+				Set<Blog> blogs = user.getBlogs();
+				for(Blog b: blogs) {
+					Set<Category> categories =b.getCategories();
+					for(Category c:categories) {
+		            	c.getBlogs().remove(b);
+		            }
+					b.setUser(null);
+//					blogDao.delete(b);				
+			}
 			}
 			Set<Reply> replys = user.getReplys();
 			for(Reply r:replys) {
@@ -343,9 +348,8 @@ public class UserController {
 //				commentDao.delete(c);
 				c.setUser(null);
 			}
-			
 			userDao.delete(user);	
-			return new ModelAndView("delete-success", "user", id);		
+			return new ModelAndView("manager-message", "message", "user deleted successfully");		
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			return new ModelAndView("error", "errorMessage", "error while login");
@@ -362,8 +366,9 @@ public class UserController {
 
 	@RequestMapping(value = "/user/update", method = RequestMethod.POST)
 	public ModelAndView updatedUser(HttpServletRequest request) throws Exception {
-		
-		int id =Integer.valueOf(request.getParameter("personID"));        
+		ModelAndView mv = new ModelAndView();
+		int id =Integer.valueOf(request.getParameter("personID"));  
+		User u= userDao.get(id);
         String username =request.getParameter("username");
 		String firstName =request.getParameter("firstName");
 		String lastName =request.getParameter("lastName");
@@ -373,10 +378,41 @@ public class UserController {
 
         userDao.update(id,username,firstName,lastName,password,emailaddress);
 
-		
-		return new ModelAndView("user-success","user",username);
+		mv.addObject("user", u);
+		mv.setViewName("user-success");
+		return mv;
 
 	}
+	
+	@RequestMapping(value = "/user/managerupdate", method = RequestMethod.GET)
+	public ModelAndView managerupdateUser(HttpServletRequest request) throws Exception {
+
+		int id =Integer.valueOf(request.getParameter("userId"));
+        User u= userDao.get(id);
+		return new ModelAndView("manager-user-update", "user", u);
+	}
+
+	@RequestMapping(value = "/user/managerupdate", method = RequestMethod.POST)
+	public ModelAndView managerupdatedUser(HttpServletRequest request) throws Exception {
+		ModelAndView mv = new ModelAndView();
+		int id =Integer.valueOf(request.getParameter("personID"));  
+		User u= userDao.get(id);
+        String username =request.getParameter("username");
+		String firstName =request.getParameter("firstName");
+		String lastName =request.getParameter("lastName");
+		String emailaddress =request.getParameter("email.emailAddress");
+		System.out.println(emailaddress);
+		String password=request.getParameter("password");
+
+        userDao.update(id,username,firstName,lastName,password,emailaddress);
+
+		mv.addObject("message", "user updated successfully");
+		mv.setViewName("manager-message");
+		return mv;
+
+	}
+	
+	
 	
 	@RequestMapping(value = "/user/error", method=RequestMethod.GET)
 	public ModelAndView error() throws Exception {
